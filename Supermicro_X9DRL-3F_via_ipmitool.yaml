@@ -1,0 +1,1038 @@
+zabbix_export:
+  version: '5.4'
+  date: '2022-07-07T17:40:07Z'
+  groups:
+    -
+      uuid: e960332b3f6c46a1956486d4f3f99fce
+      name: 'Templates/Server hardware'
+  templates:
+    -
+      uuid: 2a449945216b4c1d83a25008df499219
+      template: 'Supermicro X9DRL-3F via ipmitool'
+      name: 'Supermicro X9DRL-3F via ipmitool'
+      description: 'This template used for Supermicro X9DRL monitoring via ipmitool. Tested on Debian Linux 10'
+      groups:
+        -
+          name: 'Templates/Server hardware'
+      items:
+        -
+          uuid: 703484d16b654f828286a8de5e0b300f
+          name: 3.3V
+          type: DEPENDENT
+          key: ipmitool.3dot3v
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:3\.3V) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 16082cc626ca45738f40ed8ca8c1375e
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.3dot3v,#3)>3.936 or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.3dot3v,#3)<2.928'
+              name: '3.3V Critical with value [{ITEM.VALUE}]V'
+              priority: HIGH
+              manual_close: 'YES'
+        -
+          uuid: f584e29a59814abfaca8c61ba3cec212
+          name: 5V
+          type: DEPENDENT
+          key: ipmitool.5v
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:5V) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 5bfcbe09c3b94af7a969d16b8ceda2fa
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.5v,#3)>6.912 or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.5v,#3)<4.480'
+              name: '5V Critical with value [{ITEM.VALUE}]V'
+              priority: HIGH
+              manual_close: 'YES'
+        -
+          uuid: 9c7c7ce26b7043f0abc3055dacdaf7a2
+          name: 12V
+          type: DEPENDENT
+          key: ipmitool.12v
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:12V) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: c1a9b326bf3a449383414f47e7917947
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.12v,#3)>13.250 or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.12v,#3)<10.812'
+              name: '12V Critical with value [{ITEM.VALUE}]V'
+              priority: HIGH
+              manual_close: 'YES'
+        -
+          uuid: 019dd4a60d994c18b53111f259d36641
+          name: 'CPU1 Temp'
+          type: DEPENDENT
+          key: ipmitool.cpu1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:CPU1 Temp) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 30adc1fe49c5415fa785bd77a1bc5e04
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.cpu1.temp,#3)>{$CPU_TEMP_CRIT}'
+              name: 'CPU1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 7bdf2b1bfdb64a70a12a6863d4ac759c
+          name: 'CPU1 Vcore'
+          type: DEPENDENT
+          key: ipmitool.cpu1.vcore
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:CPU1 Vcore) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: 1baa13066923415faece7c3df0fc3c31
+          name: 'CPU1 VSA'
+          type: DEPENDENT
+          key: ipmitool.cpu1.vsa
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:CPU1 VSA) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: 2ae8569a7ee94a54ace0f9e5c3b6cd10
+          name: 'CPU2 Temp'
+          type: DEPENDENT
+          key: ipmitool.cpu2.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:CPU2 Temp) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: ea10e3f592984cdda9aa994f6f4b4d75
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.cpu2.temp,#3)>{$CPU_TEMP_CRIT}'
+              name: 'CPU2 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 37bbd0bc81a343c09e6be51fa633a612
+          name: 'CPU2 Vcore'
+          type: DEPENDENT
+          key: ipmitool.cpu2.vcore
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:CPU2 Vcore) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: 116eb7018ef54371b66605bdf4682c7d
+          name: 'CPU2 VSA'
+          type: DEPENDENT
+          key: ipmitool.cpu2.vsa
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:CPU2 VSA) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: 6c56ab2faa3c45789a2f77ade3f0303a
+          name: 'P1-DIMMA1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p1.a1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P1-DIMMA1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: d9c8375a81c94be2842426f5e120d464
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p1.a1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P1-DIMMA1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 786703e356724febac1911d1da74d9c1
+          name: 'P1-DIMMB1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p1.b1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P1-DIMMB1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 9fffca16f6794017b87d8bf59408e87f
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p1.b1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P1-DIMMB1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 893bb715a79645d8b7ca88be27edb726
+          name: 'P1-DIMMC1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p1.c1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P1-DIMMC1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 106531b85b8c4794b87976c6d9074de3
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p1.c1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P1-DIMMC1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 9f0a895f1c29407c9a9ea501d1ab942e
+          name: 'P1-DIMMD1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p1.d1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P1-DIMMD1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 86f0fb0bdf9448edadd3f45448763b10
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p1.d1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P1-DIMMD1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: cfd0fc3c8ec348b7818f80d8fa350d4e
+          name: 'P2-DIMME1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p2.e1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P2-DIMME1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: d08790241e3342b4b9f62334380781ce
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p2.e1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P2-DIMME1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 8e2664e19eda4ff5a570e09fb5cde64b
+          name: 'P2-DIMMF1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p2.f1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P2-DIMMF1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: f670bbee92f24cc78bd6fe46fa75c6c8
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p2.f1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P2-DIMMF1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: b808008018d44548bc72376ae092447f
+          name: 'P2-DIMMG1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p2.g1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P2-DIMMG1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 9451a650562045e98d21891e623dd251
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p2.g1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P2-DIMMG1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 6f2efd8f954f47269a4f46592bcbfd8d
+          name: 'P2-DIMMH1 TEMP'
+          type: DEPENDENT
+          key: ipmitool.dimm.p2.h1.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:P2-DIMMH1 TEMP) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 5f3b8e069e8042009b01ed39fcff577d
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.dimm.p2.h1.temp,#3)>{$DIMM_TEMP_CRIT}'
+              name: 'P2-DIMMH1 Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 9b1a0b93223e4bf9b8514bc54587ea87
+          name: FAN1
+          type: DEPENDENT
+          key: ipmitool.fan1
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FAN1) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 8b3b49dd5b704bfdb7cc38f956e2a09e
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan1,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan1,#3)>{$FAN_RPM_HIGH}'
+              name: 'FAN1 Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: b25216ebc7f2498096b591c18dd3c5c2
+          name: FAN2
+          type: DEPENDENT
+          key: ipmitool.fan2
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FAN2) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: fa480e7c59a3423d8e0ee57cd6184b5d
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan2,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan2,#3)>{$FAN_RPM_HIGH}'
+              name: 'FAN2 Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: 15322d3e52fa49249f78aded06cf66bc
+          name: FAN3
+          type: DEPENDENT
+          key: ipmitool.fan3
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FAN3) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 87a23686548548109090127298bc253a
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan3,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan3,#3)>{$FAN_RPM_HIGH}'
+              name: 'FAN3 Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: c90a2b8463a2448c843edd756867ec18
+          name: FAN4
+          type: DEPENDENT
+          key: ipmitool.fan4
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FAN4) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: e87864d6f5df450283641365852d623a
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan4,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan4,#3)>{$FAN_RPM_HIGH}'
+              name: 'FAN4 Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: b1f63f025fd94daab8516755a2a7cbd4
+          name: FAN5
+          type: DEPENDENT
+          key: ipmitool.fan5
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FAN5) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 5816570a21cf42ec9dfc35eb72e17d8b
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan5,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan5,#3)>{$FAN_RPM_HIGH}'
+              name: 'FAN5 Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: d058d1858fba43eb8452f9400a727b45
+          name: FAN6
+          type: DEPENDENT
+          key: ipmitool.fan6
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FAN6) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 1d51fb55ed3e4d43832495ff40e2f6b6
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan6,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fan6,#3)>{$FAN_RPM_HIGH}'
+              name: 'FAN6 Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: 9d99c88a289b47f2a0a6bed896cbfed0
+          name: FANA
+          type: DEPENDENT
+          key: ipmitool.fana
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FANA) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: ee00ff0566154044862e5f7d796b8aa6
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fana,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fana,#3)>{$FAN_RPM_HIGH}'
+              name: 'FANA Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: f467faf0f48847aa8655d26f1ccec97c
+          name: FANB
+          type: DEPENDENT
+          key: ipmitool.fanb
+          delay: '0'
+          units: RPM
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:FANB) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: FANS
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: fe7c8c365bd84332a8b45917f56ca2cf
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fanb,#3)<{$FAN_RPM_LOW} or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.fanb,#3)>{$FAN_RPM_HIGH}'
+              name: 'FANB Critical [{ITEM.VALUE}] RPM'
+              priority: HIGH
+        -
+          uuid: 8cdb024eb1074a22a1e5698fa4af8c19
+          name: 'PCH Temp'
+          type: DEPENDENT
+          key: ipmitool.pch.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:PCH Temp) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: b09cbc058db04fbcbb9075c1439cb393
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.pch.temp,#3)>{$SYS_TEMP_CRIT}'
+              name: 'PCH Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 4e04fe6119a64f5c9639b65165ef8fb4
+          name: 'Peripheral Temp'
+          type: DEPENDENT
+          key: ipmitool.peripheral.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:Peripheral Temp) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: abac353a3158407999252ad4baae617f
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.peripheral.temp,#3)>{$SYS_TEMP_CRIT}'
+              name: 'Peripheral Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: ce904f4839cc438e922e621a18c90acc
+          name: '+1.5 V'
+          type: DEPENDENT
+          key: ipmitool.plus.1dot5v
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:\+1\.5 V) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: ba6f105fb09647e5b2379cf930951c74
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.plus.1dot5v,#3)<1.344 or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.plus.1dot5v,#3)>1.648'
+              name: '+1.5V Critical with value [{ITEM.VALUE}]V'
+              priority: HIGH
+              manual_close: 'YES'
+        -
+          uuid: 52549506369c47ef85ad0807a3d84cc2
+          name: +3.3VSB
+          type: DEPENDENT
+          key: ipmitool.plus.3dot3vsb
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:\+3\.3VSB) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: cb1c62a3f134459ca6f7a5b47f7f6fb0
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.plus.3dot3vsb,#3)<2.928 or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.plus.3dot3vsb,#3)>3.648'
+              name: '+3.3VSB Critical with value [{ITEM.VALUE}]V'
+              priority: HIGH
+              manual_close: 'YES'
+        -
+          uuid: 0b04c674620a480fad5c0868f0b3b626
+          name: +5VSB
+          type: DEPENDENT
+          key: ipmitool.plus.5vsb
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:\+5VSB) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: ac47ee36880f4863b5337eed5d46f391
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.plus.5vsb,#3)<4.480 or last(/Supermicro X9DRL-3F via ipmitool/ipmitool.plus.5vsb,#3)>5.504'
+              name: '+5VSB Critical with value [{ITEM.VALUE}]V'
+              priority: HIGH
+              manual_close: 'YES'
+        -
+          uuid: 45781c66efae424ca1cdac618ad370ea
+          name: 'Sensors status'
+          key: ipmitool.sensors.status
+          delay: 30s
+          trends: '0'
+          value_type: TEXT
+          tags:
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: b1df30ce21624ce59600d20f4693d7f0
+          name: 'System Temp'
+          type: DEPENDENT
+          key: ipmitool.system.temp
+          delay: '0'
+          units: 'degrees C'
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:System Temp) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Temperature
+            -
+              tag: Proto
+              value: IPMITOOL
+          triggers:
+            -
+              uuid: 6b2c60186cb142cd96c53d5740f75842
+              expression: 'last(/Supermicro X9DRL-3F via ipmitool/ipmitool.system.temp,#3)>{$SYS_TEMP_CRIT}'
+              name: 'System Temp Critical [{ITEM.VALUE}]'
+              priority: DISASTER
+              manual_close: 'YES'
+        -
+          uuid: 5bfef47f939b495c9028c6cfc7bc850c
+          name: VBAT
+          type: DEPENDENT
+          key: ipmitool.vbat
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:VBAT) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: a19528174f5b408d88860aa4eee81803
+          name: 'VDIMM AB'
+          type: DEPENDENT
+          key: ipmitool.vdimm.ab
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:VDIMM AB) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: e286823784664b8eb215d3423f4b4a3a
+          name: 'VDIMM CD'
+          type: DEPENDENT
+          key: ipmitool.vdimm.cd
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:VDIMM CD) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: 7c0eaf0a74c74c0d9ad3233bf71db6fa
+          name: 'VDIMM EFGH'
+          type: DEPENDENT
+          key: ipmitool.vdimm.efgh
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:VDIMM EFGH) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+        -
+          uuid: 67152b0ba05c4662acabc96ec09b3ec9
+          name: VTT
+          type: DEPENDENT
+          key: ipmitool.vtt
+          delay: '0'
+          value_type: FLOAT
+          units: Volts
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - '(?:(?:VTT) +\|) +([0-9]+(?:[.]*)[0-9]*)'
+                - \1
+          master_item:
+            key: ipmitool.sensors.status
+          tags:
+            -
+              tag: Application
+              value: Voltage
+            -
+              tag: Proto
+              value: IPMITOOL
+      macros:
+        -
+          macro: '{$CPU_TEMP_CRIT}'
+          value: '79'
+        -
+          macro: '{$DIMM_TEMP_CRIT}'
+          value: '80'
+        -
+          macro: '{$DIMM_V_HIGH}'
+          value: '1.6'
+        -
+          macro: '{$DIMM_V_LOW}'
+          value: '1.1'
+        -
+          macro: '{$FAN_RPM_HIGH}'
+          value: '18000'
+        -
+          macro: '{$FAN_RPM_LOW}'
+          value: '600'
+        -
+          macro: '{$SYS_TEMP_CRIT}'
+          value: '85'
